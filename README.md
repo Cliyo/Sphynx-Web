@@ -6,7 +6,7 @@ Continuação do projeto Sphynx, com foco em melhorar e acrescentar funcionalida
 ## Tecnologias
 - HTML
 - CSS
-- JS
+- JavaScript
 - WebSocket
 
 ## Requisitos
