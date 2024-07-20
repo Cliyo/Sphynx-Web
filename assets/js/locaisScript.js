@@ -162,14 +162,21 @@ async function criarLinhaTabelaCadastrar(local, listaJson, index){
 
     tdNome.appendChild(inputNome);
 
-    let tdPermissao = document.createElement("td");
-
-    let selectPermissao = document.createElement("select");
+    let tdGrupo = document.createElement("td");
+    let containerCheckBox = document.createElement("div");
+    containerCheckBox.className = "container-checkbox";
 
     const responseGrupo = await request(api, "groups", "GET", headerAuth, null);
-    preencherSelectGrupo(selectPermissao, responseGrupo);
+    responseGrupo.forEach(grupo => {
+        containerCheckBox.innerHTML += `
+            <div class="ajustar-checkbox">
+                <input type="checkbox" id="opcao-grupo" class="opcao-grupo" name="opcao-grupo" value="${grupo.id}">
+                <label for="opcao-grupo"> ${grupo.name} </label>
+            </div>
+        `
+    })
 
-    tdPermissao.appendChild(selectPermissao);
+    tdGrupo.appendChild(containerCheckBox);
 
     let tdMac = document.createElement("td");
     tdMac.innerHTML = local.mac;
@@ -182,7 +189,7 @@ async function criarLinhaTabelaCadastrar(local, listaJson, index){
         var dados = {
             "name":  inputNome.value,
             "mac": tdMac.innerHTML,
-            "group": selectPermissao.value
+            "group": verificarCheckboxSelecionadas()
         }
         var jsonData = JSON.stringify(dados);
         
@@ -206,4 +213,17 @@ async function criarLinhaTabelaCadastrar(local, listaJson, index){
     tr.appendChild(tdAcao);
 
     return tr;
+}
+
+function verificarCheckboxSelecionadas(){
+    let listaCheckbox = document.querySelectorAll("#opcao-grupo");
+    let listaSelecionadas = [];
+
+    listaCheckbox.forEach(checkbox => {
+        if(checkbox.checked == true){
+            listaSelecionadas.push(checkbox.value);
+        }
+    })
+
+    return listaSelecionadas;
 }

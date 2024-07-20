@@ -72,6 +72,25 @@ main{
     background-color: var(--cor-clara);
 }
 
+.container-checkbox{
+    position: relative;
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 40px;
+    overflow-y: scroll;
+    max-height: 60px;
+}
+
+.ajustar-checkbox{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+}
+
 @media (max-width: 582px){   
     .locais-menu p{
         font-size: 0.4rem;
