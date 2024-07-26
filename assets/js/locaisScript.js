@@ -103,16 +103,16 @@ function adicionarFuncaoEditarAoBotao(botao){
 
 function criarLinhaTabelaMostrar(local){
     let tr = document.createElement("tr");
-
+    
     let tdNome = document.createElement("td");
     tdNome.id = "campo-nome";
-    tdNome.innerHTML = local.local.name;
+    tdNome.innerHTML = local.name;
 
     let tdGrupo = document.createElement("td");
-    tdGrupo.innerHTML = local.group.name;
+    tdGrupo.innerHTML = local.groups.map(group => group.name).join(', ');
     
     let tdMac = document.createElement("td");
-    tdMac.innerHTML = local.local.mac;
+    tdMac.innerHTML = local.mac;
 
     let tdAcao = document.createElement("td");
 
@@ -126,7 +126,7 @@ function criarLinhaTabelaMostrar(local){
     let botaoExcluir = document.createElement("button");
     botaoExcluir.innerHTML = "Excluir";
     botaoExcluir.addEventListener("click", async () => {
-        const response = await request(api, `locals/${local.local.name}`, "DELETE", headerAuth, null);
+        const response = await request(api, `locals/${local.name}`, "DELETE", headerAuth, null);
 
         try{
             mostrarMensagem(response.message);
