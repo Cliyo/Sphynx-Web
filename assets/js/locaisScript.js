@@ -108,8 +108,8 @@ function criarLinhaTabelaMostrar(local){
     tdNome.id = "campo-nome";
     tdNome.innerHTML = local.local.name;
 
-    let tdPermissao = document.createElement("td");
-    tdPermissao.innerHTML = local.group.name;
+    let tdGrupo = document.createElement("td");
+    tdGrupo.innerHTML = local.group.name;
     
     let tdMac = document.createElement("td");
     tdMac.innerHTML = local.local.mac;
@@ -142,7 +142,7 @@ function criarLinhaTabelaMostrar(local){
     tdAcao.appendChild(botaoExcluir);
 
     tr.appendChild(tdNome);
-    tr.appendChild(tdPermissao);
+    tr.appendChild(tdGrupo);
     tr.appendChild(tdMac);
     tr.appendChild(tdAcao);
 
@@ -208,7 +208,7 @@ async function criarLinhaTabelaCadastrar(local, listaJson, index){
     tdAcao.appendChild(botaoSalvar);
 
     tr.appendChild(tdNome);
-    tr.appendChild(tdPermissao);
+    tr.appendChild(tdGrupo);
     tr.appendChild(tdMac);
     tr.appendChild(tdAcao);
 
