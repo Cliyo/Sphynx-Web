@@ -77,7 +77,7 @@ function criarLinhaTabela(grupo){
     excluirBotao.innerHTML = "Excluir";
     excluirBotao.addEventListener("click", async () => {
 
-        const response = await request(api, `groups/${grupo.level}`, "DELETE", headerAuth, null);
+        const response = await request(api, `groups/${grupo.id}`, "DELETE", headerAuth, null);
 
         try{
             mostrarMensagem(response.message);
