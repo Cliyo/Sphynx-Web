@@ -48,7 +48,7 @@ opcaoLocalCadastrar.addEventListener("click", () => {
 
         tabela.innerHTML = "";
         
-        let json = localStorage.getItem("Sphynxs");
+        let json = sessionStorage.getItem("Sphynxs");
         let sphynxs = json ? JSON.parse(json) : [];
         let index = 0;
 
@@ -201,7 +201,7 @@ async function criarLinhaTabelaCadastrar(local, listaJson, index){
 
             listaJson.splice(index, 1);
 
-            localStorage.setItem("Sphynxs", JSON.stringify(listaJson));
+            sessionStorage.setItem("Sphynxs", JSON.stringify(listaJson));
         }
     })
 

@@ -105,7 +105,7 @@ async function findNewDevices(timeout){
         const found = await findAllDevices(types[i]);
 
         found.forEach(device => {
-            let json = localStorage.getItem("Sphynxs");
+            let json = sessionStorage.getItem("Sphynxs");
             let alreadyFound = json ? JSON.parse(json) : [];
 
             if (alreadyFound.some(sphynx => sphynx.mac === device.mac)) {
@@ -125,10 +125,10 @@ async function findNewDevices(timeout){
     }
 
     if (newDevices.length > 0) {
-        let json = localStorage.getItem("Sphynxs");
+        let json = sessionStorage.getItem("Sphynxs");
         let alreadyFound = json ? JSON.parse(json) : [];
         alreadyFound.push(...newDevices);
-        localStorage.setItem("Sphynxs", JSON.stringify(alreadyFound));
+        sessionStorage.setItem("Sphynxs", JSON.stringify(alreadyFound));
     }
 
     if (timeout){
