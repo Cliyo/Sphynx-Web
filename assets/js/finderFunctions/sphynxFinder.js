@@ -97,7 +97,7 @@ async function turnsEspInWebsocket(data) {
 async function findNewDevices(timeout){
     const macsInDatabase = await inDatabase();
 
-    const newDevices = []
+    var newDevices = []
 
     const types = ["services", "scan"];
 
@@ -105,10 +105,10 @@ async function findNewDevices(timeout){
         const found = await findAllDevices(types[i]);
 
         found.forEach(device => {
-            let json = sessionStorage.getItem("Sphynxs");
-            let alreadyFound = json ? JSON.parse(json) : [];
+            let unregisteredJson = sessionStorage.getItem("sphynxs-unregistered");
+            let unregisteredFound = unregisteredJson ? JSON.parse(unregisteredJson) : [];
 
-            if (alreadyFound.some(sphynx => sphynx.mac === device.mac)) {
+            if (unregisteredFound.some(sphynx => sphynx.mac === device.mac)) {
                 return;
             }
 
@@ -122,13 +122,14 @@ async function findNewDevices(timeout){
             newDevices.push(device);
             
         });
-    }
 
-    if (newDevices.length > 0) {
-        let json = sessionStorage.getItem("Sphynxs");
-        let alreadyFound = json ? JSON.parse(json) : [];
-        alreadyFound.push(...newDevices);
-        sessionStorage.setItem("Sphynxs", JSON.stringify(alreadyFound));
+        if (newDevices.length > 0) {
+            let json = sessionStorage.getItem("sphynxs-unregistered");
+            let alreadyFound = json ? JSON.parse(json) : [];
+            alreadyFound.push(...newDevices);
+            sessionStorage.setItem("sphynxs-unregistered", JSON.stringify(alreadyFound));
+            newDevices = []
+        }
     }
 
     if (timeout){
