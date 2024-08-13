@@ -33,28 +33,29 @@ findNewDevices(true);
 botaoCadastrarGrupos.addEventListener("click", () => {
     usuariosContainer.classList.add("escurecer");
     divCadastrarGrupos.classList.add("mostrar");
+})
 
-    let formCadastrar = document.querySelector("form");
-    formCadastrar.addEventListener("submit", async (event) => {
-        event.preventDefault();
 
-        var formData =  new FormData(formCadastrar);
-        var dados = Object.fromEntries(formData);
-        var jsonData = JSON.stringify(dados);
-        
-        const response = await request(api, "groups", "POST", headerAuth, jsonData);
+let formCadastrar = document.querySelector("form");
+formCadastrar.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-        mostrarMensagem(response.message);
-        if(response.status == 201){
-            tabela.appendChild(criarLinhaTabela(response.object));
-            
-            qntGrupos++;
-            legendaQntGrupos.innerHTML = `Total: ${qntGrupos} grupo(s)`;            
+    var formData =  new FormData(formCadastrar);
+    var dados = Object.fromEntries(formData);
+    var jsonData = JSON.stringify(dados);
     
-            usuariosContainer.classList.remove("escurecer");
-            divCadastrarGrupos.classList.remove("mostrar")
-        }
-    })
+    const response = await request(api, "groups", "POST", headerAuth, jsonData);
+
+    mostrarMensagem(response.message);
+    if(response.status == 201){
+        tabela.appendChild(criarLinhaTabela(response.object));
+        
+        qntGrupos++;
+        legendaQntGrupos.innerHTML = `Total: ${qntGrupos} grupo(s)`;            
+
+        usuariosContainer.classList.remove("escurecer");
+        divCadastrarGrupos.classList.remove("mostrar")
+    }
 })
 
 botaoCancelarCadastro.addEventListener("click", () => {
