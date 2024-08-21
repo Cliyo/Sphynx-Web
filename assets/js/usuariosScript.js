@@ -126,30 +126,30 @@ botaoCadastrarUsuario.addEventListener("click", async () => {
     const responseGrupo = await request(api, "groups", "GET", headerAuth, null);
 
     preencherSelectGrupo(grupoInput, responseGrupo);
+})
 
-    let formCadastrar = document.querySelector("form");
-    formCadastrar.addEventListener("submit", async (event) => {
-        event.preventDefault();
+let formCadastrar = document.querySelector("form");
+formCadastrar.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-        var formData =  new FormData(formCadastrar);
-        var dados = Object.fromEntries(formData);
-        dados.group = grupoInput.value;
-        var jsonData = JSON.stringify(dados);
-        
-        const response = await request(api, "consumers", "POST", headerAuth, jsonData);
-
-        console.log(response)
-        mostrarMensagem(response.message);
-        if(response.status == 201){
-            tabela.appendChild(criarLinhaTabela(response.object));
-            
-            qntUsuarios++;
-            legendaQntUsuarios.innerHTML = `Total: ${qntUsuarios} usuario(s)`;            
+    var formData =  new FormData(formCadastrar);
+    var dados = Object.fromEntries(formData);
+    dados.group = grupoInput.value;
+    var jsonData = JSON.stringify(dados);
     
-            usuariosContainer.classList.remove("escurecer");
-            divCadastrarUsuario.classList.remove("mostrar");
-        }
-    })
+    const response = await request(api, "consumers", "POST", headerAuth, jsonData);
+
+    console.log(response)
+    mostrarMensagem(response.message);
+    if(response.status == 201){
+        tabela.appendChild(criarLinhaTabela(response.object));
+        
+        qntUsuarios++;
+        legendaQntUsuarios.innerHTML = `Total: ${qntUsuarios} usuario(s)`;            
+
+        usuariosContainer.classList.remove("escurecer");
+        divCadastrarUsuario.classList.remove("mostrar");
+    }
 })
 
 botaoCancelarCadastro.addEventListener("click", () => {
