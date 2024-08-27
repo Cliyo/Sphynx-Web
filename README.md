@@ -15,5 +15,8 @@ Continuação do projeto Sphynx, com foco em melhorar e acrescentar funcionalida
   - https://github.com/Cliyo/Sphynx-Finder
 
 # Amostra das telas do sistema
-![image](https://github.com/Cliyo/Sphynx-Web/assets/113215138/5af8fd23-d718-466e-a50f-a5d49905872e)
-![image](https://github.com/Cliyo/Sphynx-Web/assets/113215138/08a75092-f969-4a89-93dc-072ce1e0e695)
+![image](https://github.com/user-attachments/assets/0dc2f2a8-e3d6-4591-8987-da645cd4ed2b)
+![image](https://github.com/user-attachments/assets/5984cb15-0eb7-4e56-9575-5d087ecffd24)
+![image](https://github.com/user-attachments/assets/4f7da380-8cf4-40f5-b259-4cf6fad809c1)
+
+
