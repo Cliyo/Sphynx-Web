@@ -1,7 +1,7 @@
 function preencherSelectGrupo(select, lista){
     lista.forEach(grupo => {
         let option = document.createElement("option");
-        option.value = grupo.level;
+        option.value = grupo.id;
         option.innerHTML = grupo.name;
 
         select.appendChild(option);

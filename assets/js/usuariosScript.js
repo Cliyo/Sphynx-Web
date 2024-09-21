@@ -104,7 +104,7 @@ botaoCadastrarUsuario.addEventListener("click", async () => {
 
     let inputTag = document.querySelector("#tag-input");
 
-    const websocket = new WebSocket("ws://192.168.0.106/ws");
+    const websocket = new WebSocket("ws://192.168.0.104/ws");
     websocket.onopen = () => {
         console.log("Conexão aberta com o websocket")
         if (websocket.readyState === WebSocket.OPEN) {
@@ -123,6 +123,7 @@ botaoCadastrarUsuario.addEventListener("click", async () => {
     let grupoInput = document.querySelector("#input-grupo-cadastrar");
     grupoInput.innerHTML = "";
 
+    let option = document.createElement("option");
     const responseGrupo = await request(api, "groups", "GET", headerAuth, null);
 
     preencherSelectGrupo(grupoInput, responseGrupo);
@@ -134,7 +135,6 @@ formCadastrar.addEventListener("submit", async (event) => {
 
     var formData =  new FormData(formCadastrar);
     var dados = Object.fromEntries(formData);
-    dados.group = grupoInput.value;
     var jsonData = JSON.stringify(dados);
     
     const response = await request(api, "consumers", "POST", headerAuth, jsonData);
