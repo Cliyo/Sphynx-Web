@@ -1,0 +1,16 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: sphynx-web-img
+    container_name: sphynx-web-container
+    working_dir: /app
+    healthcheck:
+      test: ["CMD", "lsof", "-t", "-i:3000"]
+      timeout: 10s
+      retries: 5
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/usr/share/nginx/html
