@@ -1,17 +1,26 @@
 # Usar a imagem base do Nginx
 FROM nginx:alpine
 
+RUN apk add --no-cache avahi dbus avahi-tools
+
+RUN mkdir -p /var/run/dbus && \
+    mkdir -p /var/run/avahi-daemon
+
 # Definir o diretório de trabalho dentro do container
 WORKDIR /usr/share/nginx/html
-
-# Remover os arquivos padrão da pasta HTML do Nginx
 RUN rm -rf ./*
 
 # Copiar seus arquivos da pasta local para o diretório de trabalho no container
 COPY . /usr/share/nginx/html
+COPY ./docker-config/nginx.conf /etc/nginx/nginx.conf
+COPY ./docker-config/avahi-daemon.conf /etc/avahi/avahi-daemon.conf
 
-# Expor a porta 80 para servir a aplicação
-EXPOSE 80
+RUN rm -rf /etc/avahi/services/*
 
-# Iniciar o Nginx
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 80 5353/udp
+
+COPY ./docker-config/start.sh /start.sh
+RUN chmod +x /start.sh
+
+#iniciar o container
+CMD ["/start.sh"]
