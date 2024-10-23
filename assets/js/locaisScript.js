@@ -15,8 +15,8 @@ const tabela = document.querySelector("tbody");
 tabela.innerHTML = "";
 const response = await request(api, "locals", "GET", headerAuth, null);
 
-response.forEach(local => {
-    let linha = criarLinhaTabelaMostrar(local);
+response.forEach(localGroup => {
+    let linha = criarLinhaTabelaMostrar(localGroup);
 
     tabela.appendChild(linha);
 });
@@ -32,8 +32,8 @@ opcaoLocalVer.addEventListener("click", async () => {
 
         const response = await request(api, "locals", "GET", headerAuth, null);
 
-        response.forEach(local => {
-            let linha = criarLinhaTabelaMostrar(local);
+        response.forEach(localGroup => {
+            let linha = criarLinhaTabelaMostrar(localGroup);
 
             tabela.appendChild(linha);
         });
@@ -101,18 +101,18 @@ function adicionarFuncaoEditarAoBotao(botao){
     tdAcao.appendChild(botaoConfirmar);
 }
 
-function criarLinhaTabelaMostrar(local){
+function criarLinhaTabelaMostrar(localGroup){
     let tr = document.createElement("tr");
     
     let tdNome = document.createElement("td");
     tdNome.id = "campo-nome";
-    tdNome.innerHTML = local.name;
+    tdNome.innerHTML = localGroup.local.name;
 
     let tdGrupo = document.createElement("td");
-    tdGrupo.innerHTML = local.groups.map(group => group.name).join(', ');
+    tdGrupo.innerHTML = localGroup.groups.map(group => group.name).join(', ');
     
     let tdMac = document.createElement("td");
-    tdMac.innerHTML = local.mac;
+    tdMac.innerHTML = localGroup.local.mac;
 
     let tdAcao = document.createElement("td");
 
@@ -126,7 +126,7 @@ function criarLinhaTabelaMostrar(local){
     let botaoExcluir = document.createElement("button");
     botaoExcluir.innerHTML = "Excluir";
     botaoExcluir.addEventListener("click", async () => {
-        const response = await request(api, `locals/${local.name}`, "DELETE", headerAuth, null);
+        const response = await request(api, `locals/${localGroup.local.name}`, "DELETE", headerAuth, null);
 
         try{
             mostrarMensagem(response.message);
