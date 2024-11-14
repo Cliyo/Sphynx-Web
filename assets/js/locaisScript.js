@@ -2,8 +2,10 @@ import { findNewDevices } from "./finderFunctions/sphynxFinder.js";
 import { headerAuth } from "./utils/headers.js";
 import { mostrarMensagem } from "./utils/messages.js";
 import { preencherSelectGrupo } from "./utils/preencherSelect.js";
-import { request } from "./utils/requestHttp.js";
-import { api } from "./utils/testeConexao.js";
+import { request, testConnection } from "./utils/requestHttp.js";
+
+const api = await testConnection() + ":57128";
+
 
 const opcaoLocalVer = document.querySelector("#locais-menu-ver");
 const opcaoLocalCadastrar = document.querySelector("#locais-menu-cadastrar");

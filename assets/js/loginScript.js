@@ -1,7 +1,8 @@
 import { header } from "./utils/headers.js";
 import { mostrarMensagem } from "./utils/messages.js";
-import {request} from "./utils/requestHttp.js";
-import { api } from "./utils/testeConexao.js";
+import { request, testConnection } from "./utils/requestHttp.js";
+
+const api = await testConnection() + ":57128";
 
 var form = document.querySelector("#form")
 

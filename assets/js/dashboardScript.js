@@ -1,6 +1,7 @@
 import { headerAuth } from "./utils/headers.js";
-import { request } from "./utils/requestHttp.js";
-import { api } from "./utils/testeConexao.js";
+import { request, testConnection } from "./utils/requestHttp.js";
+
+const api = await testConnection() + ":57128";
 
 const response = await request(api, `accessRegisters?date=${montarData()}`, "GET", headerAuth, null);
 console.log(response)

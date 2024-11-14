@@ -1,5 +1,7 @@
 import { linguagem } from "./linguagemPagina.js"
-import { api } from "./testeConexao.js"
+import { testConnection } from "./requestHttp.js";
+
+const api = await testConnection();
 
 const headerAuth = {
     'Authorization': `Bearer ${localStorage.getItem("token")}`,

@@ -1,7 +1,8 @@
-import {request} from "./utils/requestHttp.js";
-import {api} from "./utils/testeConexao.js";
 import {headerAuth} from "./utils/headers.js";
 import { findNewDevices } from "./finderFunctions/sphynxFinder.js";
+import { request, testConnection } from "./utils/requestHttp.js";
+
+const api = await testConnection() + ":57128";
 
 const tabela = document.querySelector("tbody");
 
