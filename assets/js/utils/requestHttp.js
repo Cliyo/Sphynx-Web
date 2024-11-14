@@ -19,15 +19,14 @@ async function request(api, entity, method, header, body = null, rawResponse = f
     }
 }
 
-async function testConnection(apiUrls){
-    for (const url of apiUrls){
-        const response = await request (url, `online`, "get", {'Access-Control-Allow-Origin': `${window.location.hostname}`,'Access-Control-Allow-Credentials': 'true','Content-Type': 'application/json'}, null,  true)
-            if (response){
-                if(response.ok){
-                    console.log(url)
-                    return url
-                }
-            }
+async function testConnection(){
+    const response = await request (`${window.location.hostname}:${window.location.port}`, `multicast`, "get", {'Access-Control-Allow-Origin': `${window.location.hostname}`,'Access-Control-Allow-Credentials': 'true','Content-Type': 'application/json'}, null,  true)
+    if (response){
+        let data = await response.json();
+        if(response.ok){
+            return data[0]
+        }
+        return data;
     }
 }
 export {request, testConnection};
