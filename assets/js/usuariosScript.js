@@ -103,21 +103,38 @@ botaoCadastrarUsuario.addEventListener("click", async () => {
     divCadastrarUsuario.classList.add("mostrar");
 
     let inputTag = document.querySelector("#tag-input");
+    let inputBiometria = document.querySelector("#biometria-input");
 
-    const websocket = new WebSocket("ws://192.168.0.104/ws");
-    websocket.onopen = () => {
+    const websocketTag = new WebSocket("ws://192.168.0.104/ws");
+    websocketTag.onopen = () => {
         console.log("Conexão aberta com o websocket")
-        if (websocket.readyState === WebSocket.OPEN) {
+        if (websocketTag.readyState === WebSocket.OPEN) {
             let mensagem = "tags"
-            websocket.send(mensagem);
+            websocketTag.send(mensagem);
             console.log('Solicitação de registro de tag enviada');
         }
         
     }
-    websocket.onmessage = (event) => {
+    websocketTag.onmessage = (event) => {
         console.log(event)
         console.log(event.data)
         inputTag.value = event.data;
+    }
+
+    const websocketBiometria = new WebSocket("ws://192.168.0.104/ws");
+    websocketBiometria.onopen = () => {
+        console.log("Conexão aberta com o websocket")
+        if (websocketBiometria.readyState === WebSocket.OPEN) {
+            let mensagem = "fingerid{id}"
+            websocketBiometria.send(mensagem);
+            console.log('Solicitação de registro de biometria enviada');
+        }
+        
+    }
+    websocketBiometria.onmessage = (event) => {
+        console.log(event)
+        console.log(event.data)
+        inputBiometria.value = event.data;
     }
     
     let grupoInput = document.querySelector("#input-grupo-cadastrar");
