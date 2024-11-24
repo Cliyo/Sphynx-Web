@@ -1,8 +1,8 @@
-import { findNewDevices } from "./finderFunctions/sphynxFinder.js";
 import { header, headerAuth } from "./utils/headers.js";
 import { mostrarMensagem } from "./utils/messages.js";
 import { preencherSelectGrupo } from "./utils/preencherSelect.js";
 import { request, testConnection } from "./utils/requestHttp.js";
+import { findNewDevices } from "./utils/DeviceFinder.js";
 
 const api = await testConnection() + ":57128";
 
@@ -34,8 +34,6 @@ response.forEach(usuario => {
 
 qntUsuarios = response.length;
 legendaQntUsuarios.innerHTML = `Total: ${qntUsuarios} usuario(s)`;
-
-findNewDevices(true);
 
 opcaoUsuarioVer.addEventListener("click", async () => {
     if(!opcaoUsuarioVer.classList.contains("selecionado")){
@@ -106,37 +104,48 @@ botaoCadastrarUsuario.addEventListener("click", async () => {
     let inputTag = document.querySelector("#tag-input");
     let inputBiometria = document.querySelector("#biometria-input");
 
-    const websocketTag = new WebSocket("ws://192.168.0.104/ws");
-    websocketTag.onopen = () => {
-        console.log("Conexão aberta com o websocket")
-        if (websocketTag.readyState === WebSocket.OPEN) {
-            let mensagem = "tags"
-            websocketTag.send(mensagem);
-            console.log('Solicitação de registro de tag enviada');
+    inputTag.addEventListener("click", async (event) => {
+        const websocketTag = new WebSocket("ws://192.168.0.103/ws");
+        websocketTag.onopen = () => {
+            console.log("Conexão aberta com o websocket")
+            if (websocketTag.readyState === WebSocket.OPEN) {
+                let mensagem = "tags"
+                websocketTag.send(mensagem);
+                console.log('Solicitação de registro de tag enviada');
+            }
+            
         }
-        
-    }
-    websocketTag.onmessage = (event) => {
-        console.log(event)
-        console.log(event.data)
-        inputTag.value = event.data;
-    }
+        websocketTag.onmessage = (event) => {
+            console.log(event)
+            console.log(event.data)
+            inputTag.value = event.data;
+            websocketTag.close();
+        }
+    })
 
-    const websocketBiometria = new WebSocket("ws://192.168.0.104/ws");
-    websocketBiometria.onopen = () => {
-        console.log("Conexão aberta com o websocket")
-        if (websocketBiometria.readyState === WebSocket.OPEN) {
-            let mensagem = "fingerid{id}"
-            websocketBiometria.send(mensagem);
-            console.log('Solicitação de registro de biometria enviada');
+    inputBiometria.addEventListener("click", async (event) => {
+        const usuarios = await request(api, "consumers", "GET", headerAuth, null)
+        let idDigital = usuarios.length + 1;
+        const websocketBiometria = new WebSocket("ws://192.168.0.103/ws");
+        websocketBiometria.onopen = () => {
+            console.log("Conexão aberta com o websocket")
+            if (websocketBiometria.readyState === WebSocket.OPEN) {
+                let mensagem = `fingerid${idDigital}`
+                console.log(mensagem)
+                websocketBiometria.send(mensagem);
+                console.log('Solicitação de registro de biometria enviada');
+            }
+            
         }
-        
-    }
-    websocketBiometria.onmessage = (event) => {
-        console.log(event)
-        console.log(event.data)
-        inputBiometria.value = event.data;
-    }
+        websocketBiometria.onmessage = (event) => {
+            console.log(event)
+            console.log(event.data)
+            
+            inputBiometria.value = event.data == "true" ? idDigital : null;
+            inputBiometria.placeholder = event.data == "true" ? "Biometria cadastrada" : "Erro ao cadastrar biometria";
+            websocketBiometria.close();
+        }
+    })
     
     let grupoInput = document.querySelector("#input-grupo-cadastrar");
     grupoInput.innerHTML = "";
@@ -154,6 +163,8 @@ formCadastrar.addEventListener("submit", async (event) => {
     var formData =  new FormData(formCadastrar);
     var dados = Object.fromEntries(formData);
     var jsonData = JSON.stringify(dados);
+    
+    console.log(jsonData);
     
     const response = await request(api, "consumers", "POST", headerAuth, jsonData);
 
@@ -226,3 +237,5 @@ function criarLinhaTabela(usuario){
 
     return tr;
 }
+
+findNewDevices();
