@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 
 app.get('/multicast', cors({"Access-Control-Allow-Origin": "*"}), async function (req, res) {
     multicast(req, res);
-});                                      
+});
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);

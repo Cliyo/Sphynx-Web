@@ -1,5 +1,6 @@
 import { headerAuth } from "./utils/headers.js";
 import { request, testConnection } from "./utils/requestHttp.js";
+import { findNewDevices } from "./utils/DeviceFinder.js";
 
 const api = await testConnection() + ":57128";
 
@@ -139,3 +140,5 @@ function criarLegendaRelatorioGrupos(grupos){
     }).join(', ');
     graficoGrupos.style.background = `conic-gradient(${gradientes})`;
 }
+
+findNewDevices(true);

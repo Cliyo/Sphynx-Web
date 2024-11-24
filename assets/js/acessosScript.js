@@ -1,6 +1,6 @@
 import {headerAuth} from "./utils/headers.js";
-import { findNewDevices } from "./finderFunctions/sphynxFinder.js";
 import { request, testConnection } from "./utils/requestHttp.js";
+import { findNewDevices } from "./utils/DeviceFinder.js";
 
 const api = await testConnection() + ":57128";
 
@@ -20,8 +20,6 @@ response.forEach(acesso => {
 
 qntAcessos = response.length;
 legendaQntAcessos.innerHTML = `Total: ${qntAcessos} acesso(s)`;
-
-findNewDevices(true)
 
 filtros.forEach(filtro => {
     filtro.addEventListener("change", async () => {
@@ -100,3 +98,5 @@ function gerarData(input){
 
     return dataCompleta;
 }
+
+findNewDevices();

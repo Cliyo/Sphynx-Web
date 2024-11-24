@@ -1,11 +1,10 @@
-import { findNewDevices } from "./finderFunctions/sphynxFinder.js";
 import { headerAuth } from "./utils/headers.js";
 import { mostrarMensagem } from "./utils/messages.js";
 import { preencherSelectGrupo } from "./utils/preencherSelect.js";
 import { request, testConnection } from "./utils/requestHttp.js";
+import { findNewDevices } from "./utils/DeviceFinder.js";
 
 const api = await testConnection() + ":57128";
-
 
 const opcaoLocalVer = document.querySelector("#locais-menu-ver");
 const opcaoLocalCadastrar = document.querySelector("#locais-menu-cadastrar");
@@ -22,8 +21,6 @@ response.forEach(localGroup => {
 
     tabela.appendChild(linha);
 });
-
-findNewDevices(true);
 
 opcaoLocalVer.addEventListener("click", async () => {
     if(!opcaoLocalVer.classList.contains("selecionado")){
@@ -229,3 +226,5 @@ function verificarCheckboxSelecionadas(){
 
     return listaSelecionadas;
 }
+
+findNewDevices(true);

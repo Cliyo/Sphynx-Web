@@ -1,4 +1,4 @@
-import { findNewDevices } from "./finderFunctions/sphynxFinder.js";
+import { findNewDevices } from "./utils/DeviceFinder.js";
 
 const opcaoGeral = document.querySelector("#configuracoes-menu-geral");
 const opcaoAvancado = document.querySelector("#configuracoes-menu-avancado");
@@ -27,4 +27,4 @@ opcaoAvancado.addEventListener("click", () => {
     }
 })
 
-findNewDevices(true);
+findNewDevices();

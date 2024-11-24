@@ -1,7 +1,7 @@
-import { findNewDevices } from "./finderFunctions/sphynxFinder.js";
 import { headerAuth } from "./utils/headers.js";
 import { mostrarMensagem } from "./utils/messages.js";
 import { request, testConnection } from "./utils/requestHttp.js";
+import { findNewDevices } from "./utils/DeviceFinder.js";
 
 const api = await testConnection() + ":57128";
 
@@ -28,8 +28,6 @@ response.forEach(grupo => {
 
 qntGrupos = response.length;
 legendaQntGrupos.innerHTML = `Total: ${qntGrupos} grupo(s)`;
-
-findNewDevices(true);
 
 botaoCadastrarGrupos.addEventListener("click", () => {
     usuariosContainer.classList.add("escurecer");
@@ -103,3 +101,5 @@ function criarLinhaTabela(grupo){
 
     return tr;
 }
+
+findNewDevices();
